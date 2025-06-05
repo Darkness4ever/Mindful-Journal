@@ -18,65 +18,63 @@ const Dashboard = () => {
   useEffect(() => {
     if (!currentUser) return;
 
-    // 1. Reference the 'entries' collection
     const entriesRef = collection(db, "entries");
-
-    // 2. Build a query: where userId == currentUser.uid, order by createdAt desc
     const q = query(
       entriesRef,
       where("userId", "==", currentUser.uid),
       orderBy("createdAt", "desc")
     );
 
-    // 3. Subscribe to real-time updates
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+    const unsubscribe = onSnapshot(q, (snapshot) => {
       const items = [];
-      querySnapshot.forEach((doc) => {
-        items.push({ id: doc.id, ...doc.data() });
-      });
+      snapshot.forEach((doc) => items.push({ id: doc.id, ...doc.data() }));
       setEntries(items);
     });
 
-    // 4. Clean up subscription on unmount
     return unsubscribe;
   }, [currentUser]);
 
   return (
-    <div className="container mx-auto p-4">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-semibold text-gray-800">Your Entries</h1>
+    <main className="container mx-auto px-4 py-8">
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-4xl font-semibold text-gray-800">Your Entries</h1>
         <Link
           to="/create"
-          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition"
+          className="bg-accent-500 text-white font-medium px-5 py-2 rounded-lg hover:bg-accent-600 transition"
         >
           + New Entry
         </Link>
       </div>
 
       {entries.length === 0 ? (
-        <p className="text-gray-600">
-          No entries yet. Click “New Entry” to get started.
-        </p>
+        <div className="text-center text-gray-600 py-20">
+          <p className="text-xl">No entries yet.</p>
+          <p className="mt-2">Click “New Entry” to add your first journal.</p>
+        </div>
       ) : (
-        <div className="space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {entries.map((entry) => (
             <Link
               key={entry.id}
               to={`/entry/${entry.id}`}
-              className="block bg-white p-4 rounded-lg shadow hover:shadow-md transition"
+              className="bg-white rounded-xl shadow hover:shadow-lg transform hover:-translate-y-1 transition p-5 flex flex-col justify-between"
             >
-              <h2 className="text-xl font-semibold text-gray-800">
-                {entry.title}
-              </h2>
-              <p className="text-gray-600 line-clamp-2">{entry.content}</p>
-              <p className="text-sm text-gray-500 mt-2">
+              <div>
+                <h2 className="text-2xl font-semibold text-gray-800 mb-2 line-clamp-2">
+                  {entry.title}
+                </h2>
+                <p className="text-gray-600 line-clamp-3 mb-4">
+                  {entry.content}
+                </p>
+              </div>
+              <p className="text-sm text-gray-500">
                 {entry.createdAt?.toDate().toLocaleString()}
               </p>
             </Link>
           ))}
         </div>
       )}
-    </div>
+    </main>
   );
 };
 

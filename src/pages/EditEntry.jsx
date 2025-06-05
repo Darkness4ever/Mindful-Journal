@@ -65,46 +65,50 @@ const EditEntry = () => {
   };
 
   return (
-    <div className="flex items-center justify-center p-4">
-      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-2xl">
-        <h2 className="text-2xl font-semibold mb-4 text-gray-800">
+    <div className="flex items-center justify-center px-4 py-8">
+      <div className="bg-white w-full max-w-2xl rounded-xl shadow-lg p-8">
+        <h2 className="text-3xl font-semibold text-gray-800 mb-6">
           Edit Entry
         </h2>
         {error && <p className="text-red-500 mb-4">{error}</p>}
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-gray-700">Title</label>
+            <label className="block text-gray-700 mb-1">Title</label>
             <input
               type="text"
               required
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-300"
+              placeholder="Entry title..."
             />
           </div>
           <div>
-            <label className="block text-gray-700">Content</label>
+            <label className="block text-gray-700 mb-1">Content</label>
             <textarea
               required
               value={content}
               onChange={(e) => setContent(e.target.value)}
               rows="6"
-              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400 resize-y"
+              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-300 resize-y"
+              placeholder="Write your thoughts..."
             />
           </div>
-          <button
-            type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-          >
-            Update
-          </button>
-          <button
-            type="button"
-            onClick={() => navigate(-1)}
-            className="ml-2 bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 transition"
-          >
-            Cancel
-          </button>
+          <div className="flex items-center space-x-4">
+            <button
+              type="submit"
+              className="bg-primary-600 text-white font-medium px-6 py-2 rounded-lg hover:bg-primary-700 transition"
+            >
+              Update
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate(-1)}
+              className="text-gray-600 hover:text-gray-800 transition"
+            >
+              Cancel
+            </button>
+          </div>
         </form>
       </div>
     </div>

@@ -76,6 +76,13 @@ const App = () => {
       </Router>
     </AuthProvider>
   );
+  // return (
+  //   <div className="min-h-screen flex items-center justify-center bg-primary-600">
+  //     <h1 className="text-4xl font-bold text-white">
+  //       Tailwind is working if you see blue!
+  //     </h1>
+  //   </div>
+  // );
 };
 
 export default App;
