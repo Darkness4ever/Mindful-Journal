@@ -26,52 +26,52 @@ const App = () => {
   return (
     <AuthProvider>
       <Router>
-        {/* We can include a Navbar on all pages if desired */}
-        <Navbar />
+        <div className="min-h-screen flex flex-col bg-[#f8f6f2]">
+          <Navbar />
+          <main className="flex-1 container mx-auto px-4 py-6">
+            <Routes>
+              {/* Public Routes */}
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
 
-        <div className="min-h-screen bg-gray-100">
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+              {/* Protected Routes (requires auth) */}
+              <Route
+                path="/"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/create"
+                element={
+                  <ProtectedRoute>
+                    <CreateEntry />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/edit/:id"
+                element={
+                  <ProtectedRoute>
+                    <EditEntry />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/entry/:id"
+                element={
+                  <ProtectedRoute>
+                    <ViewEntry />
+                  </ProtectedRoute>
+                }
+              />
 
-            {/* Protected Routes (requires auth) */}
-            <Route
-              path="/"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/create"
-              element={
-                <ProtectedRoute>
-                  <CreateEntry />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/edit/:id"
-              element={
-                <ProtectedRoute>
-                  <EditEntry />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/entry/:id"
-              element={
-                <ProtectedRoute>
-                  <ViewEntry />
-                </ProtectedRoute>
-              }
-            />
-
-            {/* Catch All → Redirect to Dashboard or Login */}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
+              {/* Catch All → Redirect to Dashboard or Login */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </main>
         </div>
       </Router>
     </AuthProvider>
